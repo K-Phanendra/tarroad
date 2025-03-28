@@ -12,6 +12,6 @@
 
 ## Installation
 ```sh
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git clone https://github.com/K-Phanendra/tarroad.git
 cd tarroad
 npm install
