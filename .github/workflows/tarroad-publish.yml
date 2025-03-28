@@ -1,0 +1,92 @@
+name: 🚀 Node.js Package CI/CD
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: 🔧 Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 💾 Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🧪 Run Tests
+        run: npm test
+
+      - name: 🔨 Build Package
+        run: npm run build
+
+  publish-gpr:
+    name: 📦 Publish to GitHub Packages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+
+      - name: 💾 Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🚀 Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-npm:
+    name: 🌍 Publish to npm
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🚀 Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
