@@ -1,0 +1,25 @@
+#Node.js Git Ignore
+
+# Node modules (dependencies)
+node_modules/
+npm-debug.log*
+yarn.lock
+package-lock.json
+
+# Ignore build/output files
+dist/
+.road/
+output.js
+
+# Environment variables & secrets
+.env
+.env.local
+.env.development
+.env.production
+
+# System & editor-specific files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

@@ -1,0 +1,43 @@
+{
+  "name": "tarroad",
+  "version": "1.0.0",
+  "main": "tarroad.js",
+  "description": "🚀 Tarroad: A blazing-fast Node.js hot-reloader with esbuild, designed for seamless development.",
+  "author": "Phanendra Kumpatla",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/K-Phanendra/tarroad.git"
+  },
+  "bugs": {
+    "url": "https://github.com/K-Phanendra/tarroad/issues"
+  },
+  "homepage": "https://github.com/K-Phanendra/tarroad#readme",
+  "scripts": {
+    "start": "node tarroad.js",
+    "dev": "node tarroad.js",
+    "build": "esbuild app.js --bundle --platform=node --outfile=dist/output.js",
+    "clean": "rm -rf .road dist"
+  },
+  "keywords": [
+    "node",
+    "hot-reload",
+    "watcher",
+    "esbuild",
+    "dev-server",
+    "live-reload",
+    "tarroad"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.25.1",
+    "esbuild-register": "^3.6.0"
+  }
+}
